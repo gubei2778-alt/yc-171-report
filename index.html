@@ -1,0 +1,340 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>质检整改规划 · 模板</title>
+<style>
+  :root{
+    --bg:#0e1014;
+    --bg-2:#141820;
+    --panel:#171b24;
+    --panel-2:#1d2330;
+    --line:#2a3140;
+    --line-soft:#222835;
+    --ink:#e8ecf2;
+    --ink-2:#aab2c0;
+    --ink-3:#6c7584;
+    --accent:#ff6a3d;
+    --accent-2:#ffb84d;
+    --ok:#4ade80;
+    --p0:#ff4d4f;
+    --p1:#ff9c2a;
+    --p2:#4ba3ff;
+    --p3:#8a8f9a;
+    --ext:#a48bff;
+    --none:#5a6170;
+    --mono:'JetBrains Mono','SF Mono',Menlo,Consolas,monospace;
+    --sans:'Noto Sans SC','PingFang SC','Microsoft YaHei',sans-serif;
+    --serif:'Noto Serif SC','Songti SC',serif;
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  html,body{background:var(--bg);color:var(--ink);font-family:var(--sans);font-size:14px;line-height:1.6;-webkit-font-smoothing:antialiased}
+  body{
+    background:
+      radial-gradient(1200px 600px at 85% -10%, rgba(255,106,61,.06), transparent 60%),
+      radial-gradient(900px 500px at 10% 110%, rgba(75,163,255,.05), transparent 60%),
+      var(--bg);
+    min-height:100vh;
+    padding:48px 32px 80px;
+  }
+  .wrap{max-width:1280px;margin:0 auto}
+  .header{border-top:1px solid var(--line);border-bottom:1px solid var(--line);padding:24px 0 28px;margin-bottom:32px;position:relative}
+  .header::before{content:"";position:absolute;top:-1px;left:0;width:120px;height:3px;background:var(--accent)}
+  .crumbs{font-family:var(--mono);font-size:11px;color:var(--ink-3);letter-spacing:.08em;text-transform:uppercase;margin-bottom:18px}
+  .crumbs span{color:var(--ink-2)}
+  .title{font-family:var(--serif);font-size:38px;font-weight:600;letter-spacing:-.01em;line-height:1.15;margin-bottom:10px}
+  .title .accent{color:var(--accent)}
+  .subtitle{color:var(--ink-2);font-size:14px;max-width:780px}
+  .meta-row{display:grid;grid-template-columns:repeat(4,1fr);gap:1px;margin-top:28px;background:var(--line-soft);border:1px solid var(--line-soft)}
+  .meta-row > div{background:var(--bg);padding:12px 16px}
+  .meta-row dt{font-family:var(--mono);font-size:10px;color:var(--ink-3);letter-spacing:.1em;text-transform:uppercase;margin-bottom:6px}
+  .meta-row dd{font-size:13px;color:var(--ink)}
+  section{margin-bottom:44px}
+  .sec-head{display:flex;align-items:baseline;gap:14px;margin-bottom:18px;padding-bottom:10px;border-bottom:1px solid var(--line-soft)}
+  .sec-num{font-family:var(--mono);font-size:12px;color:var(--accent);letter-spacing:.1em}
+  .sec-title{font-size:20px;font-weight:600;letter-spacing:-.005em}
+  .sec-note{margin-left:auto;font-family:var(--mono);font-size:11px;color:var(--ink-3);letter-spacing:.05em}
+  .stats{display:grid;grid-template-columns:repeat(5,1fr);gap:12px;margin-bottom:24px}
+  .stat{background:var(--panel);border:1px solid var(--line-soft);padding:18px 16px;position:relative;overflow:hidden}
+  .stat::before{content:"";position:absolute;left:0;top:0;bottom:0;width:3px;background:var(--tone,var(--ink-3))}
+  .stat .lbl{font-family:var(--mono);font-size:10px;color:var(--ink-3);letter-spacing:.12em;text-transform:uppercase;margin-bottom:8px}
+  .stat .num{font-family:var(--mono);font-size:34px;font-weight:500;color:var(--tone,var(--ink));line-height:1}
+  .stat .desc{font-size:12px;color:var(--ink-2);margin-top:8px}
+  .stat.p0{--tone:var(--p0)}
+  .stat.p1{--tone:var(--p1)}
+  .stat.p2{--tone:var(--p2)}
+  .stat.p3{--tone:var(--p3)}
+  .stat.ext{--tone:var(--ext)}
+  .kouzi{background:var(--panel);border:1px solid var(--line-soft);padding:20px 22px;margin-bottom:24px;position:relative}
+  .kouzi::before{content:"口径基准";position:absolute;top:-9px;left:18px;background:var(--bg);color:var(--accent);font-family:var(--mono);font-size:10px;letter-spacing:.15em;padding:0 8px}
+  .kouzi-grid{display:grid;grid-template-columns:1fr 1fr 1fr;gap:24px}
+  .kouzi-grid h4{font-size:13px;color:var(--ink);margin-bottom:8px;display:flex;align-items:center;gap:8px}
+  .kouzi-grid h4 .dot{width:6px;height:6px;border-radius:50%;display:inline-block}
+  .kouzi-grid p{color:var(--ink-2);font-size:12.5px;line-height:1.7}
+  .kouzi-grid code{font-family:var(--mono);color:var(--accent-2);font-size:12px;background:var(--bg-2);padding:1px 6px;border-radius:2px}
+  .p0-wrap{display:grid;grid-template-columns:1fr 1fr;gap:16px}
+  .p0-card{background:var(--panel);border:1px solid var(--line-soft);border-left:3px solid var(--p0);padding:20px 22px}
+  .p0-id{font-family:var(--mono);font-size:11px;color:var(--p0);letter-spacing:.1em;margin-bottom:4px}
+  .p0-title{font-size:15px;font-weight:600;margin-bottom:14px;line-height:1.4}
+  .p0-meta{display:grid;grid-template-columns:82px 1fr;gap:6px 14px;font-size:12.5px;margin-bottom:12px}
+  .p0-meta dt{font-family:var(--mono);font-size:10.5px;color:var(--ink-3);letter-spacing:.08em;text-transform:uppercase;padding-top:2px}
+  .p0-meta dd{color:var(--ink-2);line-height:1.55}
+  .p0-meta dd.warn{color:var(--accent-2)}
+  .p0-split{height:1px;background:var(--line-soft);margin:14px 0}
+  .p0-stages{display:grid;grid-template-columns:1fr 1fr;gap:14px;font-size:12.5px}
+  .stage{background:var(--bg-2);padding:10px 12px;border:1px solid var(--line-soft)}
+  .stage .sg-head{display:flex;justify-content:space-between;font-family:var(--mono);font-size:10.5px;letter-spacing:.08em;color:var(--ink-3);margin-bottom:6px}
+  .stage .sg-head .tag{color:var(--accent)}
+  .stage .sg-body{color:var(--ink-2);line-height:1.55}
+  .tbl-wrap{border:1px solid var(--line-soft);background:var(--panel);overflow-x:auto}
+  table{width:100%;border-collapse:collapse;font-size:13px;min-width:900px}
+  thead th{background:var(--panel-2);text-align:left;padding:11px 14px;font-family:var(--mono);font-size:10.5px;letter-spacing:.1em;color:var(--ink-3);text-transform:uppercase;font-weight:500;border-bottom:1px solid var(--line);white-space:nowrap}
+  tbody td{padding:12px 14px;border-bottom:1px solid var(--line-soft);vertical-align:top;line-height:1.55;color:var(--ink-2)}
+  tbody tr:last-child td{border-bottom:none}
+  tbody tr:hover{background:var(--panel-2)}
+  td.id{font-family:var(--mono);font-size:11.5px;color:var(--ink);white-space:nowrap}
+  td.cat{color:var(--ink-2);min-width:130px}
+  td.desc{color:var(--ink);min-width:280px}
+  td.verify{color:var(--ink-2);min-width:200px}
+  td.own{white-space:nowrap;font-family:var(--mono);font-size:11.5px;color:var(--accent-2)}
+  td.date{white-space:nowrap;font-family:var(--mono);font-size:11.5px;color:var(--ink-2)}
+  .pill{display:inline-block;padding:2px 7px;border-radius:2px;font-family:var(--mono);font-size:10.5px;letter-spacing:.05em;font-weight:500}
+  .pill.p0{background:rgba(255,77,79,.12);color:var(--p0)}
+  .pill.p1{background:rgba(255,156,42,.12);color:var(--p1)}
+  .pill.p2{background:rgba(75,163,255,.12);color:var(--p2)}
+  .pill.p3{background:rgba(138,143,154,.14);color:var(--p3)}
+  .pill.ext{background:rgba(164,139,255,.12);color:var(--ext)}
+  .sched{display:grid;grid-template-columns:repeat(4,1fr);gap:12px}
+  .sched-col{background:var(--panel);border:1px solid var(--line-soft);padding:18px 18px 16px;position:relative}
+  .sched-col .ph{font-family:var(--mono);font-size:10.5px;letter-spacing:.12em;color:var(--accent);margin-bottom:4px}
+  .sched-col .win{font-family:var(--mono);font-size:12px;color:var(--ink);margin-bottom:2px}
+  .sched-col .who{font-family:var(--mono);font-size:11px;color:var(--ink-3);margin-bottom:12px}
+  .sched-col ul{list-style:none;font-size:12.5px;color:var(--ink-2)}
+  .sched-col ul li{padding:5px 0;border-bottom:1px dashed var(--line-soft);line-height:1.5}
+  .sched-col ul li:last-child{border-bottom:none}
+  .sched-col ul li .n{font-family:var(--mono);color:var(--ink-3);margin-right:8px;font-size:11px}
+  .nf{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+  .nf-card{background:var(--panel);border:1px solid var(--line-soft);border-left:2px solid var(--none);padding:16px 18px}
+  .nf-card .nf-id{font-family:var(--mono);font-size:11px;color:var(--none);margin-bottom:6px;letter-spacing:.05em}
+  .nf-card .nf-q{font-size:13px;color:var(--ink);margin-bottom:8px}
+  .nf-card .nf-a{font-size:12.5px;color:var(--ink-2);line-height:1.6}
+  .nf-card .nf-foot{font-family:var(--mono);font-size:10.5px;color:var(--ink-3);margin-top:8px}
+  .footer{margin-top:56px;padding-top:20px;border-top:1px solid var(--line-soft);display:flex;justify-content:space-between;color:var(--ink-3);font-family:var(--mono);font-size:11px;letter-spacing:.05em}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <header class="header">
+    <div class="crumbs">北斗矩阵 &nbsp;/&nbsp; <span>共享中心质检部 YC-171</span> &nbsp;/&nbsp; <span>整改规划</span></div>
+    <h1 class="title">万有引力 YC-171 blued（不撸帝）质检整改规划 <span class="accent">·</span> 按事项口径执行</h1>
+    <p class="subtitle">基于共享中心质检部2026-04-10出具的YC-171报告（P0×1 / P1×14 / P2×41 / P3×5 / 规范外×16），按《工作事项统一口径》的 P 级—L 层分工编排整改节奏与验收口径。</p>
+    <dl class="meta-row">
+      <div><dt>质检单号</dt><dd>YC-171</dd></div>
+      <div><dt>质检日期</dt><dd>2026-04-10</dd></div>
+      <div><dt>站点 / 产品</dt><dd>万有引力 blued（不撸帝）</dd></div>
+      <div><dt>规划制定</dt><dd>2026-04-22</dd></div>
+    </dl>
+  </header>
+
+  <section id="overview">
+    <div class="sec-head"><span class="sec-num">01</span><h2 class="sec-title">问题全景</h2><span class="sec-note">共 77 项（含规范外 16）· 不修复 0</span></div>
+    <div class="stats">
+      <div class="stat p0"><div class="lbl">P0 · 立即</div><div class="num">1</div><div class="desc">止血优先，1h 响应 / 8h 止血</div></div>
+      <div class="stat p1"><div class="lbl">P1 · 本周</div><div class="num">14</div><div class="desc">24h 出方案，本周交付或给新日期</div></div>
+      <div class="stat p2"><div class="lbl">P2 · 排期</div><div class="num">41</div><div class="desc">不抢占 P0/P1 资源，合并排期</div></div>
+      <div class="stat p3"><div class="lbl">P3 · 优化</div><div class="num">5</div><div class="desc">能做就做，可给"不做"结论</div></div>
+      <div class="stat ext"><div class="lbl">规范外</div><div class="num">16</div><div class="desc">判定采纳 / 不改，需留痕</div></div>
+    </div>
+    <div class="kouzi">
+      <div class="kouzi-grid">
+        <div><h4><span class="dot" style="background:var(--p0)"></span>先定 P，再走 L</h4><p>P 级决定"多快"，L 层决定"谁做"。<code>P0</code> 先止血（L2），根因另开单不阻塞；<code>P1</code> 本周内完成；<code>P2</code> 不抢占资源。</p></div>
+        <div><h4><span class="dot" style="background:var(--accent)"></span>P0 四要素缺一不立</h4><p>证据 / Owner / 影响范围 / 止血方案，缺任何一个不得定 P0。定级前由产品负责人逐项核对。</p></div>
+        <div><h4><span class="dot" style="background:var(--ok)"></span>止血 ≠ 根因</h4><p>止血定义：用户侧恢复可用或风险解除并留痕。根因修复按 P1/P2 另排，不因找根因拖住止血。</p></div>
+      </div>
+    </div>
+  </section>
+
+  <section id="p0">
+    <div class="sec-head"><span class="sec-num">02</span><h2 class="sec-title">P0 · 立即止血</h2><span class="sec-note">SLA 1h 响应 / 8h 止血 · 根因另开单</span></div>
+    <div class="p0-wrap">
+      <article class="p0-card">
+        <div class="p0-id">P0-1 &nbsp;·&nbsp; 充值、支付、会员、金币类规范</div>
+        <div class="p0-title">在充值流程最后一步的支付方式选择弹窗中，出现了【如有疑问请咨询在线客服】入口，打断用户支付流程。</div>
+        <dl class="p0-meta">
+          <dt>证据</dt><dd>支付方式选择弹窗-在线客服入口</dd>
+          <dt>Owner</dt><dd>王维 / 楚然</dd>
+          <dt>影响范围</dt><dd class="warn">打断用户支付流程转化</dd>
+          <dt>止血方案</dt><dd>支付方式选择弹窗应仅保留与当前支付直接相关的操作内容，屏蔽客服入口</dd>
+        </dl>
+        <div class="p0-split"></div>
+        <div class="p0-stages">
+          <div class="stage"><div class="sg-head"><span>L2 止血</span><span class="tag">≤ 8h</span></div><div class="sg-body">下线该支付步骤界面的客服跳转链接</div></div>
+          <div class="stage"><div class="sg-head"><span>L3 根因</span><span class="tag">排期同步</span></div><div class="sg-body">将客服入口调整至前置会员类型选择页面</div></div>
+        </div>
+      </article>
+    </div>
+  </section>
+
+  <section id="p1">
+    <div class="sec-head"><span class="sec-num">03</span><h2 class="sec-title">P1 · 本周处理</h2><span class="sec-note">24h 出方案 · 本周交付</span></div>
+    <div class="tbl-wrap">
+      <table>
+        <thead><tr><th>编号</th><th>类目</th><th>问题 · 一句话</th><th>验收口径（怎样算通过）</th><th>Owner</th><th>目标日</th></tr></thead>
+        <tbody>
+          <tr><td class="id"><span class="pill p1">P1-1</span></td><td class="cat">全局的权限与隐私</td><td class="desc">多任务管理界面缩略图暴露应用内首页内容与视频画面</td><td class="verify">展示模糊页面、App logo或其他隐私保护缩略图</td><td class="own">雪花</td><td class="date">本周内</td></tr>
+          <tr><td class="id"><span class="pill p1">P1-2</span></td><td class="cat">内容展示规范</td><td class="desc">会员中心支付提示弹窗正文提示文案区域上下留白过大</td><td class="verify">控制留白比例，保持排版紧凑协调</td><td class="own">王维</td><td class="date">本周内</td></tr>
+          <tr><td class="id"><span class="pill p1">P1-3</span></td><td class="cat">内容展示规范</td><td class="desc">视频全屏状态下线路切换抽屉菜单位置过于靠右，被边缘裁切</td><td class="verify">抽屉菜单位置完整显示不被裁切</td><td class="own">王维</td><td class="date">本周内</td></tr>
+          <tr><td class="id"><span class="pill p1">P1-4</span></td><td class="cat">内容展示规范</td><td class="desc">漫画详情页向下滑动时顶部播放器未保持统一位移，悬空错位</td><td class="verify">滑动场景下保持统一位移与层次清晰</td><td class="own">雪花</td><td class="date">本周内</td></tr>
+          <tr><td class="id"><span class="pill p1">P1-5</span></td><td class="cat">内容展示规范</td><td class="desc">产品浏览过程中页面底部直接出现红色技术异常报错信息</td><td class="verify">展示可理解通用异常提示或无感兜底</td><td class="own">木君</td><td class="date">本周内</td></tr>
+          <tr><td class="id"><span class="pill p1">P1-6</span></td><td class="cat">内容展示规范</td><td class="desc">评论区删除态下方的时间、回复入口和文案排布不一致</td><td class="verify">统一正常态与删除态时间展示与文案层级</td><td class="own">雪花</td><td class="date">本周内</td></tr>
+          <tr><td class="id"><span class="pill p1">P1-7</span></td><td class="cat">内容展示规范</td><td class="desc">图片换脸模块中相同模板重复展示</td><td class="verify">确保模板唯一展示并去重</td><td class="own">蒋青杉</td><td class="date">本周内</td></tr>
+          <tr><td class="id"><span class="pill p1">P1-8</span></td><td class="cat">内容展示规范</td><td class="desc">社区页面下拉加载时顶部选择功能区出现明显留白与断层</td><td class="verify">加载过程中提供完整占位或骨架屏兜底</td><td class="own">木君</td><td class="date">本周内</td></tr>
+          <tr><td class="id"><span class="pill p1">P1-9</span></td><td class="cat">内容展示规范</td><td class="desc">页面Toast提示"参数错误！"，技术化表达且语气生硬</td><td class="verify">使用自然语言说明问题并去除感叹号结尾</td><td class="own">蒋青杉</td><td class="date">本周内</td></tr>
+          <tr><td class="id"><span class="pill p1">P1-10</span></td><td class="cat">交互规范</td><td class="desc">点击首页弹窗广告外链时在App内置浏览器打开</td><td class="verify">点击外部链接拉起系统第三方浏览器</td><td class="own">雪花</td><td class="date">本周内</td></tr>
+          <tr><td class="id"><span class="pill p1">P1-11</span></td><td class="cat">播放器规范</td><td class="desc">视频换脸页面已选模版播放器右下角全屏按钮图标被裁切</td><td class="verify">全屏等常见按钮图标清晰完整可识别</td><td class="own">雪花/木君</td><td class="date">本周内</td></tr>
+          <tr><td class="id"><span class="pill p1">P1-12</span></td><td class="cat">播放器规范</td><td class="desc">iOS动漫全屏播放时视频画面上下存在大面积黑边</td><td class="verify">横屏视频合理适配全屏展示区域</td><td class="own">雪花</td><td class="date">本周内</td></tr>
+          <tr><td class="id"><span class="pill p1">P1-13</span></td><td class="cat">播放器规范</td><td class="desc">漫画阅读页开启自动阅读时控制面板没有暂停按钮</td><td class="verify">提供完整的开始、暂停、继续控制能力</td><td class="own">雪花</td><td class="date">本周内</td></tr>
+          <tr><td class="id"><span class="pill p1">P1-14</span></td><td class="cat">弹窗广告规范</td><td class="desc">首页弹窗广告点击非广告蒙版区域无效，广告无法关闭</td><td class="verify">点击蒙版区域应直接关闭广告</td><td class="own">雪花</td><td class="date">本周内</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </section>
+
+  <section id="p2">
+    <div class="sec-head"><span class="sec-num">04</span><h2 class="sec-title">P2 · 合并排期</h2><span class="sec-note">不抢占 P0/P1 资源 · 分批完成</span></div>
+    <div class="tbl-wrap">
+      <table>
+        <thead><tr><th>编号</th><th>类目</th><th>问题 · 一句话</th><th>验收口径</th><th>Owner</th><th>批次</th></tr></thead>
+        <tbody>
+          <tr><td class="id"><span class="pill p2">P2-1</span></td><td class="cat">全局的权限与隐私</td><td class="desc">首次打开应用并播放视频时未默认静音处理</td><td class="verify">首次播放视频默认无声，记录音量状态</td><td class="own">雪花/王维</td><td class="date">合批</td></tr>
+          <tr><td class="id"><span class="pill p2">P2-2</span></td><td class="cat">全局的权限与隐私</td><td class="desc">切到多任务管理页面/后台时视频仍有声播放</td><td class="verify">最小化或切后台时保持静音</td><td class="own">雪花</td><td class="date">合批</td></tr>
+          <tr><td class="id"><span class="pill p2">P2-3</span></td><td class="cat">全局的权限与隐私</td><td class="desc">AI专区"上传图片"未申请相册权限直接展开相册内容</td><td class="verify">读取相册内容前向用户发起相册权限申请</td><td class="own">蒋青杉</td><td class="date">合批</td></tr>
+          <tr><td class="id"><span class="pill p2">P2-4</span></td><td class="cat">App套壳规范</td><td class="desc">帖子详情页长按正文内容弹出系统原生菜单</td><td class="verify">屏蔽长按后的系统原生选项</td><td class="own">雪花</td><td class="date">合批</td></tr>
+          <tr><td class="id"><span class="pill p2">P2-5</span></td><td class="cat">UI兼容性规范</td><td class="desc">视频详情页与主页展示的粉丝/作品数据不一致</td><td class="verify">跨页面数据保持实时同步与展示一致</td><td class="own">雪花</td><td class="date">合批</td></tr>
+          <tr><td class="id"><span class="pill p2">P2-6</span></td><td class="cat">UI兼容性规范</td><td class="desc">首页UP列表页点赞数与视频详情页点赞数不一致</td><td class="verify">列表页与详情页点赞数据展示统一</td><td class="own">王维</td><td class="date">合批</td></tr>
+          <tr><td class="id"><span class="pill p2">P2-7</span></td><td class="cat">UI兼容性规范</td><td class="desc">页面集数按钮带VIP标识，但"全部集数"弹层内未同步</td><td class="verify">所有入口展示的VIP标识保持一致</td><td class="own">雪花</td><td class="date">合批</td></tr>
+          <tr><td class="id"><span class="pill p2">P2-8</span></td><td class="cat">内容展示规范</td><td class="desc">顶部导航标签数量较少时未全屏等分布局，宽度不一</td><td class="verify">少量标签应统一等分排列</td><td class="own">雪花/蒋青杉</td><td class="date">合批</td></tr>
+          <tr><td class="id"><span class="pill p2">P2-9</span></td><td class="cat">内容展示规范</td><td class="desc">无数据的次级分类标签仍向外展示，导致误点空页</td><td class="verify">无内容时应自动隐藏分类标签</td><td class="own">雪花/王维/木君</td><td class="date">合批</td></tr>
+          <tr><td class="id"><span class="pill p2">P2-10</span></td><td class="cat">内容展示规范</td><td class="desc">漫画名称展示在高亮度封面上无对比度，文字看不清</td><td class="verify">名称与背景增加对比度/蒙版/阴影过渡</td><td class="own">雪花</td><td class="date">合批</td></tr>
+          <tr><td class="id"><span class="pill p2">P2-11</span></td><td class="cat">内容展示规范</td><td class="desc">色图卡片底部图片数量仅数字展示，缺说明视觉突兀</td><td class="verify">采用清晰统一样式或图标承托数据展示</td><td class="own">王维</td><td class="date">合批</td></tr>
+          <tr><td class="id"><span class="pill p2">P2-12</span></td><td class="cat">内容展示规范</td><td class="desc">帖子评论区连续显示大量"已销号""已删除"占据空间</td><td class="verify">折叠、隐藏失效评论或控制展示数量</td><td class="own">王维</td><td class="date">合批</td></tr>
+          <tr><td class="id"><span class="pill p2">P2-13</span></td><td class="cat">内容展示规范</td><td class="desc">视频播放页点赞功能行与下方广告图标区上下间距过近</td><td class="verify">保留合理纵向间距使分层清晰</td><td class="own">王维</td><td class="date">合批</td></tr>
+          <tr><td class="id"><span class="pill p2">P2-14</span></td><td class="cat">内容展示规范</td><td class="desc">"交友"列表点更多进入后，仅留标题其余完全空白</td><td class="verify">提供美观的空态/缺省兜底，勿大面积死白</td><td class="own">雪花</td><td class="date">合批</td></tr>
+          <tr><td class="id"><span class="pill p2">P2-15</span></td><td class="cat">内容展示规范</td><td class="desc">热门搜索无数据时仅保留标题与大面积空白区域</td><td class="verify">无数据时增加隐藏处理或空态兜底</td><td class="own">王维/雪花</td><td class="date">合批</td></tr>
+          <tr><td class="id"><span class="pill p2">P2-16</span></td><td class="cat">内容展示规范</td><td class="desc">漫画目录正序倒序切换时高度变化导致页面上下抖动</td><td class="verify">保持内容高度一致避免布局跳变抖动</td><td class="own">王维</td><td class="date">合批</td></tr>
+          <tr><td class="id"><span class="pill p2">P2-17</span></td><td class="cat">内容展示规范</td><td class="desc">客服回复内容以纯文字平铺，无对话气泡容器样式</td><td class="verify">使用明确的对话气泡/容器清晰区分</td><td class="own">木君</td><td class="date">合批</td></tr>
+          <tr><td class="id"><span class="pill p2">P2-18</span></td><td class="cat">内容展示规范</td><td class="desc">我的下载已完成页无空态占位，与下载中页的空态不一</td><td class="verify">各页签统一空状态占位展示设计</td><td class="own">木君</td><td class="date">合批</td></tr>
+          <tr><td class="id"><span class="pill p2">P2-19</span></td><td class="cat">内容展示规范</td><td class="desc">AI绘画顶部导航未体现末位"切割感"，横滑引导不足</td><td class="verify">标签应保留切割感引导用户横滑认知</td><td class="own">蒋青杉</td><td class="date">合批</td></tr>
+          <tr><td class="id"><span class="pill p2">P2-20</span></td><td class="cat">内容展示规范</td><td class="desc">动漫13集列表仅展前6集且不支持横滑，只依靠入口</td><td class="verify">支持左右滑动横滑展示全部集数内容</td><td class="own">雪花</td><td class="date">合批</td></tr>
+          <tr><td class="id"><span class="pill p2">P2-21</span></td><td class="cat">内容展示规范</td><td class="desc">漫画/色图暂无内容的标签仍对外入口，点击为提示空</td><td class="verify">自动隐藏暂无内容的标签避免二次失望</td><td class="own">雪花/王维</td><td class="date">合批</td></tr>
+          <tr><td class="id"><span class="pill p2">P2-22</span></td><td class="cat">交互规范</td><td class="desc">动漫详情页点击集数时触发整页刷新，打断浏览</td><td class="verify">采用局部内容切换，避免非必要整页刷新</td><td class="own">雪花</td><td class="date">合批</td></tr>
+          <tr><td class="id"><span class="pill p2">P2-23</span></td><td class="cat">交互规范</td><td class="desc">横屏全屏时手势引导图标停留时间过长遮挡视频画面</td><td class="verify">引导图标尽快自动消失避免遮挡</td><td class="own">王维</td><td class="date">合批</td></tr>
+          <tr><td class="id"><span class="pill p2">P2-24</span></td><td class="cat">交互规范</td><td class="desc">全屏倍速抽屉菜单弹出后点击空白区域无法自动收起</td><td class="verify">点击空白区域支持自动收起菜单</td><td class="own">王维</td><td class="date">合批</td></tr>
+          <tr><td class="id"><span class="pill p2">P2-25</span></td><td class="cat">交互规范</td><td class="desc">帖子列表页与帖子详情页点赞数量不一致 (1020/1021)</td><td class="verify">点赞数据多处保持实时、准确同步</td><td class="own">王维</td><td class="date">合批</td></tr>
+          <tr><td class="id"><span class="pill p2">P2-26</span></td><td class="cat">交互规范</td><td class="desc">同账号在同一页面的不同位置关注状态展示不一致</td><td class="verify">关注状态全局统一刷新，杜绝状态回滚</td><td class="own">雪花</td><td class="date">合批</td></tr>
+          <tr><td class="id"><span class="pill p2">P2-27</span></td><td class="cat">交互规范</td><td class="desc">视频播放页线路选择弹窗中均未展示当前的选中状态</td><td class="verify">对已生效线路提供高亮或标记反馈</td><td class="own">王维/楚然/木君</td><td class="date">合批</td></tr>
+          <tr><td class="id"><span class="pill p2">P2-28</span></td><td class="cat">交互规范</td><td class="desc">主页点击关注后按钮变更但粉丝数未同步刷新数据</td><td class="verify">关注后相关统计数据应即时同步更新</td><td class="own">雪花</td><td class="date">合批</td></tr>
+          <tr><td class="id"><span class="pill p2">P2-29</span></td><td class="cat">交互规范</td><td class="desc">【安卓】我的页面点击头像无反应，必须点图标进信息</td><td class="verify">头像直接作为入口支持跳转个人信息</td><td class="own">王维</td><td class="date">合批</td></tr>
+          <tr><td class="id"><span class="pill p2">P2-30</span></td><td class="cat">交互规范</td><td class="desc">AI作品入口端内提示无网，却跳至外部浏览器打开</td><td class="verify">端内正常加载或保持跳转逻辑统一不矛盾</td><td class="own">王维</td><td class="date">合批</td></tr>
+          <tr><td class="id"><span class="pill p2">P2-31</span></td><td class="cat">交互规范</td><td class="desc">评论弹窗键盘弹起后点击空白区域无法自动收起键盘</td><td class="verify">点击输入框外支持自动收回键盘</td><td class="own">王维</td><td class="date">合批</td></tr>
+          <tr><td class="id"><span class="pill p2">P2-32</span></td><td class="cat">交互规范</td><td class="desc">主页取消关注后返回视频播放页头像状态未同步变更</td><td class="verify">前后页面同一博主关注状态实时一致</td><td class="own">王维</td><td class="date">合批</td></tr>
+          <tr><td class="id"><span class="pill p2">P2-33</span></td><td class="cat">交互规范</td><td class="desc">"观看记录"入口进入后二级页面标题显示为"历史记录"</td><td class="verify">入口名称与目标页面标题保持一致</td><td class="own">王维</td><td class="date">合批</td></tr>
+          <tr><td class="id"><span class="pill p2">P2-34</span></td><td class="cat">交互规范</td><td class="desc">社区列表与帖子详情点击图片无反应，不支持全屏预览</td><td class="verify">支持图片点击进入全屏或大图查看状态</td><td class="own">王维</td><td class="date">合批</td></tr>
+          <tr><td class="id"><span class="pill p2">P2-35</span></td><td class="cat">交互规范</td><td class="desc">【安卓】漫画阅读页底部进度条滑动控制功能失效无跳转</td><td class="verify">阅读进度条支持正常拖动与跳转反馈</td><td class="own">木君</td><td class="date">合批</td></tr>
+          <tr><td class="id"><span class="pill p2">P2-36</span></td><td class="cat">交互规范</td><td class="desc">UP主主页点击"订阅"后底端提示无法订阅，结果不符</td><td class="verify">隐藏不可订阅入口或支持正常完成流程</td><td class="own">木君</td><td class="date">合批</td></tr>
+          <tr><td class="id"><span class="pill p2">P2-37</span></td><td class="cat">交互规范</td><td class="desc">客服对话页面刷新后以往历史聊天内容消失未被保留</td><td class="verify">正常保留并同步已有历史聊天记录</td><td class="own">木君</td><td class="date">合批</td></tr>
+          <tr><td class="id"><span class="pill p2">P2-38</span></td><td class="cat">交互规范</td><td class="desc">图片换脸页点击手机物理返回键无响应无法退上一层</td><td class="verify">支持手机返回键的正常全局后退逻辑</td><td class="own">蒋青杉</td><td class="date">合批</td></tr>
+          <tr><td class="id"><span class="pill p2">P2-39</span></td><td class="cat">交互规范</td><td class="desc">编辑帖子已填写内容后点发布仍笼统提示所有字段为空</td><td class="verify">准确指出真实校验失败项，对应填写状态</td><td class="own">雪花</td><td class="date">合批</td></tr>
+          <tr><td class="id"><span class="pill p2">P2-40</span></td><td class="cat">交互规范</td><td class="desc">未选择充值支付方式时"立即购买"可点击且无默认选中</td><td class="verify">提供默认选中或在未选时置灰确认按钮</td><td class="own">楚然</td><td class="date">合批</td></tr>
+          <tr><td class="id"><span class="pill p2">P2-41</span></td><td class="cat">交互规范</td><td class="desc">个人修改姓名为空时直接点"确认修改"完全无提示系统</td><td class="verify">为空状态下触发应提供友好的错误提示</td><td class="own">楚然</td><td class="date">合批</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </section>
+
+  <section id="p3">
+    <div class="sec-head"><span class="sec-num">05</span><h2 class="sec-title">P3 与规范外采纳项</h2><span class="sec-note">不插队 · 随 P2 批次合并</span></div>
+    <div class="tbl-wrap">
+      <table>
+        <thead><tr><th>编号</th><th>类目</th><th>问题</th><th>验收口径</th><th>Owner</th><th>说明</th></tr></thead>
+        <tbody>
+          <tr><td class="id"><span class="pill p3">P3-1</span></td><td class="cat">内容展示规范</td><td class="desc">全中文页面列表封面角标却混用展示为英文"Free"</td><td class="verify">状态标签文案统一使用中文本地化表达</td><td class="own">雪花</td><td class="date">随批次</td></tr>
+          <tr><td class="id"><span class="pill p3">P3-2</span></td><td class="cat">交互规范</td><td class="desc">小说页金币不足提示"数量不足!"，叹号语气过强</td><td class="verify">去除提示中的感叹号使用平和句式</td><td class="own">雪花/蒋青杉/楚然</td><td class="date">随批次</td></tr>
+          <tr><td class="id"><span class="pill p3">P3-3</span></td><td class="cat">交互规范</td><td class="desc">评论输入框因键盘弹起导致部分被遮盖，发送按钮显示不全</td><td class="verify">输入区域自动上移不被键盘遮挡</td><td class="own">王维</td><td class="date">随批次</td></tr>
+          <tr><td class="id"><span class="pill p3">P3-4</span></td><td class="cat">交互规范</td><td class="desc">Toast提示"只有VIP才能使用缓存功能!"文案生硬带感叹号</td><td class="verify">调整为更柔和正向易接受表达"开通VIP后…"</td><td class="own">蒋青杉</td><td class="date">随批次</td></tr>
+          <tr><td class="id"><span class="pill p3">P3-5</span></td><td class="cat">交互规范</td><td class="desc">付费解锁弹窗文案"支持原创…"表述过于直白生硬具压迫</td><td class="verify">采用自然柔顺提示避免强压迫感命令式</td><td class="own">蒋青杉</td><td class="date">随批次</td></tr>
+          <tr><td class="id"><span class="pill ext">规范外-1</span></td><td class="cat">交互规范</td><td class="desc">未开启VPN点击客服或官方群链接提示站点无响应</td><td class="verify">支持访问或提供明确网络环境提示</td><td class="own">王维</td><td class="date">随批次</td></tr>
+          <tr><td class="id"><span class="pill ext">规范外-2</span></td><td class="cat">全局的权限与隐私</td><td class="desc">分享保存图片系统无相册权限情况下仍提示保存成功</td><td class="verify">触发保存时申请权限未授权不返回成功</td><td class="own">王维</td><td class="date">随批次</td></tr>
+          <tr><td class="id"><span class="pill ext">规范外-3</span></td><td class="cat">充值/支付类规范</td><td class="desc">漫画《醉酒甜心》标Free但实际点开要求VIP付费</td><td class="verify">前后鉴权标识和实际阅读状态统一</td><td class="own">雪花</td><td class="date">随批次</td></tr>
+          <tr><td class="id"><span class="pill ext">规范外-4</span></td><td class="cat">内容展示规范</td><td class="desc">多个页面资源加载异常时未提供兜底图导致大面积空白</td><td class="verify">提供明确的加载状态或缺省图兜底</td><td class="own">王维</td><td class="date">随批次</td></tr>
+          <tr><td class="id"><span class="pill ext">规范外-5</span></td><td class="cat">充值/支付类规范</td><td class="desc">AI制作因金币不足时提示但未提供充值跳转通道</td><td class="verify">同步提供明确的充值通道或跳转路径</td><td class="own">雪花</td><td class="date">随批次</td></tr>
+          <tr><td class="id"><span class="pill ext">规范外-6</span></td><td class="cat">交互规范</td><td class="desc">AI去衣上传图片限制小于1MB过小导致用户正常图片难上传</td><td class="verify">提供合理的文件大小限制</td><td class="own">雪花</td><td class="date">随批次</td></tr>
+          <tr><td class="id"><span class="pill ext">规范外-7</span></td><td class="cat">内容展示规范</td><td class="desc">漫画正文内容区夹杂大面积二维码及站外宣传打断阅读</td><td class="verify">保持正文纯净不穿插无关联大面积引流块</td><td class="own">雪花</td><td class="date">随批次</td></tr>
+          <tr><td class="id"><span class="pill ext">规范外-8</span></td><td class="cat">交互规范</td><td class="desc">会员中心"限时折扣"倒计时时间处于静止状态未正常变化</td><td class="verify">倒计时需随时间实时动态刷新</td><td class="own">雪花</td><td class="date">随批次</td></tr>
+          <tr><td class="id"><span class="pill ext">规范外-9</span></td><td class="cat">内容展示规范</td><td class="desc">种子评论区有大量"已销号"评论挤占真实评论展示空间</td><td class="verify">控制无效数据重复展示密度折叠隐藏</td><td class="own">木君</td><td class="date">随批次</td></tr>
+          <tr><td class="id"><span class="pill ext">规范外-10</span></td><td class="cat">交互规范</td><td class="desc">男同属性产品AI专区出现了其他取向的内容</td><td class="verify">示例素材符合整体主用户群体调性定位</td><td class="own">木君</td><td class="date">随批次</td></tr>
+          <tr><td class="id"><span class="pill ext">规范外-11</span></td><td class="cat">交互规范</td><td class="desc">使用过程中APP发生闪退且提示"应用自身问题闪退"</td><td class="verify">保持产品运行稳定杜绝无故闪退</td><td class="own">木君</td><td class="date">随批次</td></tr>
+          <tr><td class="id"><span class="pill ext">规范外-12</span></td><td class="cat">内容展示规范</td><td class="desc">AI图片换脸的"制服"标签下其实完全无内容直接空白展示</td><td class="verify">无内容时隐藏标签或补充有效兜底图</td><td class="own">蒋青杉</td><td class="date">随批次</td></tr>
+          <tr><td class="id"><span class="pill ext">规范外-13</span></td><td class="cat">交互规范</td><td class="desc">视频换脸出现男女为主模板与同性产品定位严重不符</td><td class="verify">素材模板保持与主目标受众偏好统一</td><td class="own">蒋青杉</td><td class="date">随批次</td></tr>
+          <tr><td class="id"><span class="pill ext">规范外-14</span></td><td class="cat">播放器规范</td><td class="desc">播放视频退出后再次进入同一视频从头开始未记忆进度</td><td class="verify">记录上次观看进度并在再点入时继续播放</td><td class="own">蒋青杉</td><td class="date">随批次</td></tr>
+          <tr><td class="id"><span class="pill ext">规范外-15</span></td><td class="cat">充值/支付类规范</td><td class="desc">钱包资产名称为"宝石"但支付弹框文案写着"购买金币"</td><td class="verify">全链路资产名称文案统一</td><td class="own">王维</td><td class="date">随批次</td></tr>
+          <tr><td class="id"><span class="pill ext">规范外-16</span></td><td class="cat">交互规范</td><td class="desc">非VIP用户点缓存仅提供Toast生硬提示，无开通引导弹窗</td><td class="verify">弹出VIP开通引导弹窗增加直接转化路径</td><td class="own">楚然</td><td class="date">随批次</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </section>
+
+  <section id="schedule">
+    <div class="sec-head"><span class="sec-num">06</span><h2 class="sec-title">节奏排布</h2><span class="sec-note">按口径分四档 · 合并至同一版本发布</span></div>
+    <div class="sched">
+      <div class="sched-col">
+        <div class="ph">阶段 01 · 止血</div>
+        <div class="win">【即日 → 本周】（8h 内）</div>
+        <div class="who">L2 值班 / 运维</div>
+        <ul><li><span class="n">01</span><span class="ph-text">支付流程去除客服入口止血</span></li></ul>
+      </div>
+      <div class="sched-col">
+        <div class="ph">阶段 02 · P0 根因</div>
+        <div class="win">【按排期】</div>
+        <div class="who">L3 研发 · Owner【王维/楚然】</div>
+        <ul><li><span class="n">01</span><span class="ph-text">充值客服入口流转优化与前置</span></li></ul>
+      </div>
+      <div class="sched-col">
+        <div class="ph">阶段 03 · P1 批次</div>
+        <div class="win">【本周交付】</div>
+        <div class="who">L3 研发 + 设计</div>
+        <ul><li><span class="n">01</span><span class="ph-text">P1 14条阻碍式交互体验与UI层主批修复</span></li></ul>
+      </div>
+      <div class="sched-col">
+        <div class="ph">阶段 04 · P2/P3 合并</div>
+        <div class="win">【分批次】</div>
+        <div class="who">L3 研发 + 设计</div>
+        <ul>
+          <li><span class="n">01</span><span class="ph-text">P2 41条主批次排期与处理</span></li>
+          <li><span class="n">02</span><span class="ph-text">P3 5条及16项规范外建议结合优化合并修复</span></li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <section id="notfix">
+    <div class="sec-head"><span class="sec-num">07</span><h2 class="sec-title">判定不修复</h2><span class="sec-note">P2 口径要求：给明确"不做"结论并留痕</span></div>
+    <div class="nf">
+      <div class="nf-card">
+        <div class="nf-id"><span class="pill none">--</span> &nbsp; 暂无确认不修复项</div>
+        <div class="nf-q ph-text">建议：无</div>
+        <div class="nf-a ph-text">结论：如有经评审不做修改的内容请补充于此。</div>
+        <div class="nf-foot">提出人 【暂无】</div>
+      </div>
+    </div>
+  </section>
+
+  <div class="footer">
+    <span>北斗矩阵 · 共享中心质检部</span>
+    <span>YC-171 · v1.0 · 2026-04-22</span>
+  </div>
+
+</div>
+</body>
+</html>
